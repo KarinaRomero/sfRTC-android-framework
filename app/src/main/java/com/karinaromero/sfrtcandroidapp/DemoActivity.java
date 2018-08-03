@@ -6,8 +6,15 @@ import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.karinaromero.sfrtc.*;
@@ -44,9 +51,16 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
     private Button btnHangUp;
     private Button btnSendMessage;
     private Button btnAnswer;
+    private Button btnShowMessage;
+    private Button btnCloseMessage;
 
     private EditText edtNameCall;
     private EditText edtMessage;
+    private TextView txtOnCallMessage;
+    private TextView txtMessages;
+
+    private LinearLayout linearLayoutMessages;
+    private LinearLayout linearLayoutOnCall;
 
     private WebRTCClient client;
 
@@ -55,22 +69,28 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
+        linearLayoutMessages = findViewById(R.id.llyt_message);
+
+        linearLayoutOnCall = findViewById(R.id.llyt_oncall);
+
+        txtOnCallMessage = findViewById(R.id.txtOnCallMessage);
+
         edtNameCall = findViewById(R.id.edtNameCall);
         edtMessage = findViewById(R.id.edtMessage);
 
         btnCall = findViewById(R.id.btnCall);
-        btnCall.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
 
         btnHangUp = findViewById(R.id.btnHangUp);
-        btnHangUp.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
 
         btnSendMessage = findViewById(R.id.btnSendMessage);
+        btnCloseMessage = findViewById(R.id.btnCloseMessages);
+        txtMessages = findViewById(R.id.txtMessages);
 
         remoteRender = findViewById(R.id.pip_video_view);
         localRender = findViewById(R.id.fullscreen_video_view);
 
         btnAnswer = findViewById(R.id.btnAnswer);
-        btnAnswer.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
+        btnShowMessage = findViewById(R.id.btnShowMessage);
 
         btnCall.setOnClickListener(view -> {
             callName = edtNameCall.getText().toString();
@@ -86,13 +106,7 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
             }
         });
         btnHangUp.setOnClickListener(view -> {
-            callName = edtNameCall.getText().toString();
-            Log.d("UserName", username);
-            if (callName != null) {
-                client.hangUp();
-            } else {
-                Toast.makeText(getApplicationContext(), "Debes llenar el campo", Toast.LENGTH_SHORT).show();
-            }
+            client.hangUp();
         });
         btnSendMessage.setOnClickListener(view -> {
             String message = edtMessage.getText().toString();
@@ -101,6 +115,15 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
 
         btnAnswer.setOnClickListener(view -> {
             client.answer();
+            hidingLayout(linearLayoutOnCall);
+            //btnCall.setVisibility(View.GONE);
+            //edtNameCall.setVisibility(View.GONE);
+        });
+        btnShowMessage.setOnClickListener(view -> {
+            this.showingLayout(linearLayoutMessages);
+        });
+        btnCloseMessage.setOnClickListener(view -> {
+            this.hidingLayout(linearLayoutMessages);
         });
 
         remoteSinks.add(remoteProxyRenderer);
@@ -155,6 +178,9 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
     @Override
     public void onCallReady(String callId) {
         this.callName = callId;
+        txtOnCallMessage.setText("Llamada de " + callName);
+        this.showingLayout(linearLayoutOnCall);
+
     }
 
     @Override
@@ -177,15 +203,50 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
 
     @Override
     public void onRemoveRemoteStream(String otherName) {
+        btnCall.setVisibility(View.VISIBLE);
+        edtNameCall.setVisibility(View.VISIBLE);
+        //remoteProxyRenderer.setTarget(null);
         remoteRender.release();
     }
 
     @Override
     public void onMessage(String message) {
-        Log.d("ONMESSAGE:: ", message);
         String printM = callName + " dice: " + message;
-        runOnUiThread(() -> Toast.makeText(getApplicationContext(), printM, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> txtMessages.setText(printM));
 
+    }
+    //endregion
+
+    //region ApplicationDemo
+
+    /**
+     * Pause the video call when changing screen
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (client != null) {
+            client.onPause();
+        }
+    }
+
+    /**
+     * If any element of the graphical interface has changed while the activity was in the background this method is called.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (client != null) {
+            client.onResume();
+        }
+    }
+
+    /***
+     * Eliminates any background process video call.
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
     //endregion
 
@@ -206,4 +267,41 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
             this.target = target;
         }
     }
+
+    public void showingLayout(LinearLayout linearLayout) {
+        if (linearLayout.getVisibility() == View.GONE) {
+            animation(true, linearLayout);
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hidingLayout(LinearLayout linearLayout) {
+        if (linearLayout.getVisibility() == View.VISIBLE) {
+            animation(false, linearLayout);
+            linearLayout.setVisibility(View.GONE);
+        }
+
+    }
+    private void animation(boolean mostrar, LinearLayout layoutAnimado)
+    {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = null;
+        if (mostrar)
+        {
+            //desde la esquina inferior derecha a la superior izquierda
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        }
+        else
+        {    //desde la esquina superior izquierda a la esquina inferior derecha
+            animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
+        }
+        //duración en milisegundos
+        animation.setDuration(500);
+        set.addAnimation(animation);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+
+        layoutAnimado.setLayoutAnimation(controller);
+        layoutAnimado.startAnimation(animation);
+    }
+
 }

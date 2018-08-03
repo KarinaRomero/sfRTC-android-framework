@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_launcher_background"
     tools:context=".LoginActivity">
 
 
@@ -22,7 +23,12 @@
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0.75"
+        android:background="@android:color/black"
         android:text="Login"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

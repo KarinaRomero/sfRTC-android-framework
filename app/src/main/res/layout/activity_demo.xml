@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".DemoActivity">
 
+
     <org.webrtc.SurfaceViewRenderer
         android:id="@+id/fullscreen_video_view"
         android:layout_width="wrap_content"
@@ -16,92 +17,158 @@
 
     <org.webrtc.SurfaceViewRenderer
         android:id="@+id/pip_video_view"
-        android:layout_height="144dp"
         android:layout_width="wrap_content"
+        android:layout_height="144dp"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp" />
+
+
     <EditText
         android:id="@+id/edtNameCall"
-        android:layout_width="223dp"
-        android:layout_height="51dp"
+        android:layout_width="200dp"
+        android:layout_height="64dp"
         android:layout_above="@+id/btnCall"
         android:layout_alignParentStart="false"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginStart="32dp"
-        android:textColor="#ffff"
-        app:layout_constraintBottom_toTopOf="@+id/edtMessage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.358" />
-
-    <Button
-        android:id="@+id/btnCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
-        android:text="Call"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toEndOf="@+id/edtNameCall"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnHangUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnCall"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/btnCall"
-        android:text="Hang Up"
-        app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCall"
-        app:layout_constraintVertical_bias="0.717" />
-
-    <EditText
-        android:id="@+id/edtMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="280dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:hint="User name to call"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSendMessage"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnSendMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="276dp"
-        android:layout_marginEnd="16dp"
-        android:text="Send"
+        android:id="@+id/btnCall"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_rcall"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/edtNameCall" />
 
     <Button
-        android:id="@+id/btnAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btnHangUp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@+id/btnCall"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/btnCall"
+        android:background="@drawable/ic_rhangup"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btnCall" />
+
+    <Button
+        android:id="@+id/btnShowMessage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@+id/btnCall"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="ANSWER"
+        android:background="@drawable/ic_rmessage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintHorizontal_bias="0.976"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSendMessage"
-        app:layout_constraintVertical_bias="0.07" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.017" />
+
+
+    <LinearLayout
+        android:id="@+id/llyt_message"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:background="?attr/editTextColor"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCloseMessages"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@android:drawable/ic_menu_close_clear_cancel" />
+
+            <TextView
+
+                android:id="@+id/txtMessages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:ems="12"
+                android:hint="Message"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btnSendMessage"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ic_rsendm"
+                android:text="Send" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llyt_oncall"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
+
+        <TextView
+            android:id="@+id/txtOnCallMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btnAnswer"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_ranswer" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -5,7 +5,101 @@
       <map>
         <entry key="imageWizard">
           <value>
-            <PersistentState />
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="imageAssetPanel">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="134" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundText">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="ff5336" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundTextAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="text" value="SF" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundImage" value="$USER_HOME$/Documents/custom icons/ic_rlogin_bg_1.svg" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
+                                      <entry key="foregroundAssetType" value="TEXT" />
+                                      <entry key="foregroundLayerName" value="ic_launcher" />
+                                      <entry key="outputName" value="bg_login" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="textAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="text" value="SF" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Documents/custom icons/ic_rlogin_bg_1.svg" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
           </value>
         </entry>
         <entry key="vectorWizard">

@@ -152,7 +152,7 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
      * Create Peer Connection
      */
 
-    private void createPeerConnection() {
+    public void createPeerConnection() {
         PeerConnection.RTCConfiguration rtcConfig =
                 new PeerConnection.RTCConfiguration(iceServers);
         peerConnection = peerConnectionFactory.createPeerConnection(rtcConfig, this);
@@ -263,13 +263,6 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
     }
 
     /**
-     * Call this method in Activity.onDestroy()
-     */
-    public void onDestroy() {
-        removePeer();
-    }
-
-    /**
      * This method sends an offer with the user name you want to call it is called in the call button on the main activity.
      *
      * @param otherName It contains the name to call
@@ -280,7 +273,11 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
         }
         this.otherName = otherName;
 
-        peerConnection.createOffer(this, mediaConstraints);
+        if (peerConnection != null) {
+            peerConnection.createOffer(this, mediaConstraints);
+            wClientListener.onStatusChanged("CALLING");
+        }
+
     }
 
     /**
@@ -312,7 +309,7 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
         JSONObject sendLive = new JSONObject();
         try {
             sendLive.put("type", "leave");
-            sendLive.put("name", userName);
+            sendLive.put("name", otherName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -338,9 +335,7 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
         try {
             wClientListener.onRemoveRemoteStream(otherName);
             peerConnection.close();
-            videoSource.dispose();
-            peerConnectionFactory.dispose();
-            messagesHandlerToSignaling.closeConnection();
+            peerConnection = null;
         } catch (Exception e) {
             Log.d(TAG, "error: " + e);
         }
@@ -358,12 +353,12 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
         wClientListener.onStatusChanged("RECEIVING");
         this.otherName = otherName;
 
-        SessionDescription sdp = new SessionDescription(SessionDescription.Type.fromCanonicalForm("OFFER"), offer);
-        peerConnection.setRemoteDescription(this, sdp);
-        peerConnection.createAnswer(this, mediaConstraints);
-
-
-        wClientListener.onCallReady(this.otherName);
+        if (peerConnection != null) {
+            SessionDescription sdp = new SessionDescription(SessionDescription.Type.fromCanonicalForm("OFFER"), offer);
+            peerConnection.setRemoteDescription(this, sdp);
+            peerConnection.createAnswer(this, mediaConstraints);
+            wClientListener.onCallReady(this.otherName);
+        }
     }
 
     @Override
@@ -371,7 +366,7 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
         SessionDescription sdp = new SessionDescription(SessionDescription.Type.fromCanonicalForm("ANSWER"), answer);
         peerConnection.setRemoteDescription(this, sdp);
 
-        wClientListener.onCallReady(otherName);
+        wClientListener.onStatusChanged("ANSWERING");
 
     }
 
