@@ -86,14 +86,9 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
      * @param enableDataChannel        to enable Data Channel
      */
     public WebRTCClient(String url, String userName, WClientListener wClientListener, PeerConnectionParameters peerConnectionParameters, DataChannelParameters dataChannelParameters, Context appContext, boolean enableDataChannel) throws WebRTCClientException {
-        if (url == null) {
-            throw new WebRTCClientException("The url is null");
-        }
+
         if (appContext == null) {
             throw new WebRTCClientException("The appContext is null");
-        }
-        if (dataChannelParameters == null) {
-            throw new WebRTCClientException("The dataChannelParameters is null");
         }
         if (userName == null) {
             throw new WebRTCClientException("The userName is null");
@@ -141,9 +136,13 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
         mediaConstraints.optional.add(new MediaConstraints.KeyValuePair("RtpDataChannels", "true"));
         mediaConstraints.optional.add(new MediaConstraints.KeyValuePair("DtlsSrtpKeyAgreement", "true"));
 
-        createLocalStream();
+        if (peerConnectionParameters != null) {
+            createLocalStream();
+        }
 
-        messagesHandlerToSignaling = new MessagesHandlerToSignaling(url, userName, this);
+        if (url != null) {
+            messagesHandlerToSignaling = new MessagesHandlerToSignaling(url, userName, this);
+        }
 
         createPeerConnection();
     }
@@ -153,17 +152,20 @@ public class WebRTCClient implements MessagesHandlerToSignaling.MessagesToSignal
      */
 
     public void createPeerConnection() {
+
         PeerConnection.RTCConfiguration rtcConfig =
                 new PeerConnection.RTCConfiguration(iceServers);
         peerConnection = peerConnectionFactory.createPeerConnection(rtcConfig, this);
-
         if (enableDataChannel) {
-            enableDataChannel = enableDataChannel;
             setupDataChannelConnection();
         }
-        peerConnection.addStream(localMS); //, new MediaConstraints()
 
-        wClientListener.onStatusChanged("CONNECTING");
+        if (peerConnectionParameters != null) {
+
+            peerConnection.addStream(localMS); //, new MediaConstraints()
+
+            wClientListener.onStatusChanged("CONNECTING");
+        }
     }
 
     /**

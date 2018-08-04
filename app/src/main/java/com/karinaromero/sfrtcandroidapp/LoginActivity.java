@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     TextView txtName;
+    Button btnShowMirror;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +18,18 @@ public class LoginActivity extends AppCompatActivity {
 
         txtName = findViewById(R.id.textViewName);
         btnLogin= findViewById(R.id.buttonLogin);
+        btnShowMirror= findViewById(R.id.btnShowMirror);
 
         btnLogin.setOnClickListener(v -> {
                     Intent i = new Intent(LoginActivity.this, DemoActivity.class);
                     String userName = txtName.getText().toString();
                     i.putExtra("UserName", userName);
+                    startActivity(i);
+                }
+        );
+
+        btnShowMirror.setOnClickListener(v -> {
+                    Intent i = new Intent(LoginActivity.this, MirrorDemoActivity.class);
                     startActivity(i);
                 }
         );
