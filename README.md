@@ -30,9 +30,12 @@ I recommend to use Android Studio.
 
 ## Run demo 
 
-Bbefore
+- Before, check the [signaling](https://github.com/KarinaRomero/signaling) project and make sure it run.
+- Then, open the project add the custom URL signaling into appFolder > app > src > main > sfrtcandroidapp > DemoActivity.java in this line:
 
-Open the project and configure a device before you will Run app.
+    `63 private String wsuri = "ws://your.url.signaling";`
+
+- Finally configure a device and you will Run app.
 
 ## Usages
 
