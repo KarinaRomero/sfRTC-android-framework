@@ -1,6 +1,6 @@
 # sfRTC-android-framework
 
-This is a framework to simplify implementation webRTC protocol to android apps.
+This is a framework to simplify implementation WebRTC protocol to android apps.
 
 ## Tools
 
@@ -8,25 +8,27 @@ I recommend to use Android Studio.
 
 ## Generate module library
 
-- If you have Android studio, then open the Gradle tasks, expand :sfrtc and build.
+- If you have Android studio, then open the Gradle tasks, expand :sfrtc and build options.
 
 - Synchronize assembleRelease task and wait the process finished.
 
-- Next, navigate into project folder appFolder>sfrtc>build>outputs>aar
+- Next, navigate into project folder appFolder > sfrtc > build > outputs > aar
 
 ## Add library to your project
 
-- Firstly create a new Android Studio Project 
+- Firstly create a new Android Studio Project.
 
-- Next into your project select option New Module, File>New>New Module and select import .JAR/.AAR package option and then click Next.
+- Next into your project select option New Module, File > New > New Module and select import .JAR/.AAR package option and then click Next.
 
 - After select .aar file and click Finish.
 
-- Finally add the next lines into the file build.gradle module app in the section dependences
+- Finally add the next lines into the file build.gradle module app in the section dependences:
 
     `implementation project(':sfrtc')`
 
     `implementation 'org.webrtc:google-webrtc:1.0.23295'`
+    
+Note: This is a little guide, for more information about libraries on Android click [here](https://developer.android.com/studio/projects/android-library?hl=es-419)
 
 ## Run demo 
 
