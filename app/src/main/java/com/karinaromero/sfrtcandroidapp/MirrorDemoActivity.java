@@ -67,7 +67,6 @@ public class MirrorDemoActivity extends AppCompatActivity implements WebRTCClien
         localRender.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
         localRender.setEnableHardwareScaler(false /* enabled */);
 
-        //init();
 
         // To get default size view
         Point displaySize = new Point();
