@@ -12,7 +12,7 @@ I recommend to use Android Studio.
 
 - Synchronize assembleRelease task and wait the process finished.
 
-- Next, navigate into project folder appFolder > sfrtc > build > outputs > aar
+- Next, navigate into project folder appFolder > sfrtc > build > outputs > aar.
 
 ## Add library to your project
 
@@ -22,18 +22,18 @@ I recommend to use Android Studio.
 
 - After select .aar file and click Finish.
 
-- Finally add the next lines into the file build.gradle module app in the section dependences:
+- Finally add the next lines into the file build.gradle module app in the section dependences :
 
     `implementation project(':sfrtc')`
 
     `implementation 'org.webrtc:google-webrtc:1.0.23295'`
     
-Note: This is a little guide, for more information about libraries on Android click [here](https://developer.android.com/studio/projects/android-library?hl=es-419)
+Note: This is a little guide, for more information about Android libraries click [here](https://developer.android.com/studio/projects/android-library?hl=es-419).
 
 ## Run demo 
 
 - Before, check the [signaling](https://github.com/KarinaRomero/signaling) project and make sure it run.
-- Then, open the project add the custom URL signaling into appFolder > app > src > main > sfrtcandroidapp > DemoActivity.java in this line:
+- Then, open the project add the custom URL signaling into appFolder > app > src > main > sfrtcandroidapp > DemoActivity.java in this line :
 
     `63 private String wsuri = "ws://your.url.signaling";`
 
@@ -41,8 +41,8 @@ Note: This is a little guide, for more information about libraries on Android cl
 
 ## Usages
 
-To create a [simple mirror](https://github.com/KarinaRomero/sfRTC-android-framework/blob/master/app/src/main/java/com/karinaromero/sfrtcandroidapp/MirrorDemoActivity.java) 
+To create a [simple mirror](https://github.com/KarinaRomero/sfRTC-android-framework/blob/master/app/src/main/java/com/karinaromero/sfrtcandroidapp/MirrorDemoActivity.java).
 
 ## License
 
-This framework is licenced under [MIT Licence](https://opensource.org/licenses/MIT) 
+This framework is licenced under [MIT Licence](https://opensource.org/licenses/MIT).
