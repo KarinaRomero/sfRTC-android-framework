@@ -1,6 +1,16 @@
 language: android
 jdk: openjdk10
-sudo: true
+sudo: required
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
 
 android:
   components:
@@ -9,5 +19,6 @@ android:
     - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
     - build-tools-27.0.3
     - android-27
+    - extra
 
 script: ./gradlew assembleRelease
