@@ -205,8 +205,8 @@ public class JavaActivity extends AppCompatActivity {
         * @param protocol
         * @param negotiated
         * @param id
+        * For a quick configuration it is recommended to use the following
         */
-        // For a quick configuration it is recommended to use the following
         dataChannelParameters = new DataChannelParameters(true, 30, 30, "", true, 1);
 
         // Stablish the frames local video
