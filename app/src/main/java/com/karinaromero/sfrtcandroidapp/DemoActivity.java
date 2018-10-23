@@ -60,7 +60,7 @@ public class DemoActivity extends AppCompatActivity implements WebRTCClient.WCli
     private SurfaceViewRenderer remoteRender;
     private final List<VideoSink> remoteSinks = new ArrayList<>();
 
-    private String wsuri = "ws://your.url.signaling";
+    private String wsuri = "ws://192.168.0.11:8888";
     private String username;
     private String callName;
 
