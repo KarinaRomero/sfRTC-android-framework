@@ -13,4 +13,3 @@ android:
 
 script:
   - ./gradlew assemble
-  - ./gradlew assembleRelease
